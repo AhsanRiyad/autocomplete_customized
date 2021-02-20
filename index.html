@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style.css">
     
@@ -13,7 +15,7 @@
 
 </head>
 <body>
-    <div x-data="data()"  x-init="$watch('value', value => console.log('i am okay'))" x-init="$watch('items', value => console.log('i am okay'))" >
+    <!-- <div x-data="data()"  x-init="$watch('value', value => console.log('i am okay'))" x-init="$watch('items', value => console.log('i am okay'))" >
 
         <div class="autcomplete">
             <input  x-on:input="valueChange($event.target.value)" x-model="value" class="inputField" placeholder="Country"    />
@@ -24,27 +26,26 @@
             </div>
         </div>
 
-
         <div>
             other data
         </div> 
         
-    </div>
-
+    </div> -->
+<!-- 
     <div class="flex-container-autcomplete" x-data="data()" x-init="$watch('value', value => console.log('i am okay'))">
         
         <div class="autcomplete1">
             <div>
                 <input x-on:input="valueChange($event.target.value)" x-model="value" class="input1" />
             </div>
-            <div class="autcomplete_items1">
+          <div class="autcomplete_items1">
                 <template x-for="item in items" :key="item">
                     <div class="autcomplete_div" x-text="item.name"></div>
                 </template>
-            </div>
+            </div> 
         </div> 
 
-        <div >
+        <div class="autcomplete2">
             <div>
                 <input class="input2" />
             </div>
@@ -56,6 +57,32 @@
             <button class="button1"> Submit </button>
         </div>
 
+    </div> -->
+
+
+    <div class="autcomplete-position" x-data="data()" x-init="$watch('category', value => categoryChange(value))"
+        x-init="$watch('product', value => productChange(value))"
+        
+        >
+        <div class="auto1" > 
+            <input type="text"  x-model="category" class="inputField" placeholder="Category" />
+            <div class="autocomplete-full-div" >
+                <template x-for="item in itemsCategory" :key="item">
+                    <div x-on:click="categoryClick(item)" class="autocomplete-items-div" x-text="item.name"></div>
+                </template>
+            </div>
+        </div>
+        <div class="auto2" > 
+            <input type="text"  x-model="product" class="inputField" placeholder="Product"/>
+            <div class="autocomplete-full-div">
+                <template x-for="item in itemsProduct" :key="item">
+                    <div class="autocomplete-items-div" x-text="item.name"></div>
+                </template>
+            </div>
+        </div>
+    <button class="button1"> Submit </button>
+        <div class="clearFix"></div>
+
     </div>
 
 
@@ -65,20 +92,67 @@
     function data() {
         return {
             value: "",
-            items: [
+            itemsCategory:[],
+            itemsProduct:[],
+            category: "",
+            product: "",
+            
+            itemsProductAll: [
             {
                 name: 'Riyad'
             },
             {
                 name: 'Maliha'
-            }
+            },
+            {
+                name: 'Madhab'
+            },
+            {
+                name: 'Arif'
+            },
+            {
+                name: 'Sazzad'
+            },
             ],
 
-            valueChange(value){
-                this.value = value;
-                this.items.push({ name: value });
+            itemsCategoryAll: [
+            {
+                name: 'Riyad'
+            },
+            {
+                name: 'Maliha'
+            },
+            {
+                name: 'Madhab'
+            },
+            {
+                name: 'Arif'
+            },
+            {
+                name: 'Sazzad'
+            },
+            ],
+
+            categoryChange(value){
+                // this.value = value;
+                // this.items.push({ name: value });
+                // const regexp = new RegExp(`(${value})*`, 'gi') 
+
+                this.itemsCategory = this.itemsCategoryAll.filter(n=> value == n.name);
 
                 console.log('this is new value' , value);
+            },
+
+            productChange(value){
+                // this.value = value;
+                // this.items.push({ name: value });
+                // let patt = /(${value})*/gi;
+                this.itemsProduct = this.itemsProductAll.filter(n=>{n.name == value});
+
+                console.log('this is new value' , value);
+            },
+            categoryClick(value){
+                console.log(value.name);
             }
 
         }
