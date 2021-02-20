@@ -10,6 +10,25 @@
     <title>Document</title>
 
     <style>
+
+        input {
+        border: 1px solid transparent;
+        background-color: #f1f1f1;
+        padding: 10px;
+        font-size: 16px;
+        }
+
+        input[type=text] {
+        background-color: #f1f1f1;
+        width: 100%;
+        }
+
+        input[type=submit] {
+        background-color: DodgerBlue;
+        color: #fff;
+        cursor: pointer;
+        }
+
         .autcomplete{
                 position: relative;
                 width: 300px;
@@ -27,20 +46,25 @@
             right: 0;
                 width: 300px;
 
-            /* background: red; */
+            background: white;
         } 
+
+        .autcomplete_div{
+            border: 1px solid black;
+        }
+
 
     </style>
 
 </head>
 <body>
-    <div x-data="data()">
+    <div x-data="data()"  x-init="$watch('value', value => console.log('i am okay'))" x-init="$watch('items', value => console.log('i am okay'))" >
 
-        <div class="autcomplete"  >
-            <input x-on:input="valueChange($event.target.value)" x-model="value" class="inputField" placeholder="Country"    />
-            <div class="autcomplete_items" x-init="$watch('value', value => console.log('i am okay'))">
+        <div class="autcomplete">
+            <input  x-on:input="valueChange($event.target.value)" x-model="value" class="inputField" placeholder="Country"    />
+            <div class="autcomplete_items" >
                 <template  x-for="item in items" :key="item">
-                    <div x-text="item.name"></div>
+                    <div class="autcomplete_div" x-text="item.name"></div>
                 </template>
             </div>
         </div>
@@ -56,14 +80,19 @@
     function data() {
         return {
             value: "",
-            items: [{
+            items: [
+            {
                 name: 'Riyad'
             },
             {
                 name: 'Maliha'
-            }],
+            }
+            ],
 
             valueChange(value){
+                this.value = value;
+                this.items.push({ name: value });
+
                 console.log('this is new value' , value);
             }
 
