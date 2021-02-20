@@ -7,54 +7,9 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+    
     <title>Document</title>
-
-    <style>
-
-        input {
-        border: 1px solid transparent;
-        background-color: #f1f1f1;
-        padding: 10px;
-        font-size: 16px;
-        }
-
-        input[type=text] {
-        background-color: #f1f1f1;
-        width: 100%;
-        }
-
-        input[type=submit] {
-        background-color: DodgerBlue;
-        color: #fff;
-        cursor: pointer;
-        }
-
-        .autcomplete{
-                position: relative;
-                width: 300px;
-            }
-
-        .autcomplete_items{
-             position: absolute;
-            border: 1px solid #d4d4d4;
-            border-bottom: none;
-            border-top: none;
-            z-index: 99;
-            /*position the autocomplete items to be the same width as the container:*/
-            top: 100%;
-            left: 0;
-            right: 0;
-                width: 300px;
-
-            background: white;
-        } 
-
-        .autcomplete_div{
-            border: 1px solid black;
-        }
-
-
-    </style>
 
 </head>
 <body>
@@ -69,11 +24,41 @@
             </div>
         </div>
 
+
         <div>
             other data
         </div> 
         
     </div>
+
+    <div class="flex-container-autcomplete" x-data="data()" x-init="$watch('value', value => console.log('i am okay'))">
+        
+        <div class="autcomplete1">
+            <div>
+                <input x-on:input="valueChange($event.target.value)" x-model="value" class="input1" />
+            </div>
+            <div class="autcomplete_items1">
+                <template x-for="item in items" :key="item">
+                    <div class="autcomplete_div" x-text="item.name"></div>
+                </template>
+            </div>
+        </div> 
+
+        <div >
+            <div>
+                <input class="input2" />
+            </div>
+            <div>
+                this is another
+            </div>
+        </div>
+        <div>
+            <button class="button1"> Submit </button>
+        </div>
+
+    </div>
+
+
 </body>
 
 <script>

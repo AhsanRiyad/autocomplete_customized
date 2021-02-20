@@ -1,0 +1,101 @@
+@import './_baseVariables.scss';
+
+input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+}
+
+input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+    cursor: pointer;
+}
+
+.autcomplete {
+    position: relative;
+    width: 300px;
+}
+
+.autcomplete1 {
+    position: relative;
+    width: 300px;
+}
+
+.autcomplete_items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 300px;
+
+    background: white;
+}
+
+.autcomplete_items1 {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 200px;
+
+    background: white;
+}
+
+.autcomplete_div {
+    border: 1px solid black;
+}
+
+
+.flex-container-autcomplete {
+    display: flex;
+    margin-top: 100px;
+    flex: 1;
+}
+
+.input1 {
+    position: relative;
+    >div{
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+            width: 300px;
+    }
+}
+
+
+
+.input2 {
+    margin-left: 5px;
+}
+
+.button1 {
+    cursor: pointer;
+    // width: 150px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-left: 5px;
+}
