@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+
+    <style>
+        .autcomplete{
+                position: relative;
+                width: 300px;
+            }
+
+        .autcomplete_items{
+             position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+                width: 300px;
+
+            /* background: red; */
+        } 
+
+    </style>
+
+</head>
+<body>
+    <div x-data="data()">
+
+        <div class="autcomplete"  >
+            <input x-on:input="valueChange($event.target.value)" x-model="value" class="inputField" placeholder="Country"    />
+            <div class="autcomplete_items" x-init="$watch('value', value => console.log('i am okay'))">
+                <template  x-for="item in items" :key="item">
+                    <div x-text="item.name"></div>
+                </template>
+            </div>
+        </div>
+
+        <div>
+            other data
+        </div> 
+        
+    </div>
+</body>
+
+<script>
+    function data() {
+        return {
+            value: "",
+            items: [{
+                name: 'Riyad'
+            },
+            {
+                name: 'Maliha'
+            }],
+
+            valueChange(value){
+                console.log('this is new value' , value);
+            }
+
+        }
+    }
+</script>
+
+</html>
