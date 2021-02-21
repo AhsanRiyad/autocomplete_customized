@@ -69,10 +69,10 @@
             </div>
         </div>
         <div class="auto2-xyz" > 
-            <input  type="text" x-on:input="productChange($event.target.value)" x-model="product" class="inputField-xyz" placeholder="Product"/>
+            <input x-on:keydown.enter="productKeyEnter()" x-on:keydown.arrow-down="productKeyDown()" x-on:keydown.arrow-up="productKeyUp()"  type="text" x-on:input="productChange($event.target.value)" x-model="product" class="inputField-xyz" placeholder="Product"/>
             <div class="autocomplete-full-div-xyz">
-                <template x-for="item in itemsProduct" :key="item">
-                    <div x-on:click="productClick(item)" class="autocomplete-items-div-xyz" x-text="item.title"></div>
+                <template x-for="(item , index) in itemsProduct" :key="item">
+                    <div :style="productFocus(index)" x-on:click="productClick(item)" class="autocomplete-items-div-xyz" x-text="item.title"></div>
                 </template>
             </div>
         </div>
@@ -203,9 +203,32 @@
             },
             categoryKeyEnter(){
                 this.category =  this.itemsCategory[this.categoryFocusIndex].name;
-                this.itemsCategory = [];
                 this.categoryId = this.itemsCategory[this.categoryFocusIndex].id;
+                this.itemsCategory = [];
                 this.categoryFocusIndex = -1;
+            },
+            productFocus(index){
+                if(index == this.productFocusIndex){
+                    return 'background-color: red';
+                }else{
+                    return 'background-color: white';
+                }
+            },
+            productKeyDown(){
+                if(this.itemsProduct.length > this.productFocusIndex ){
+                    this.productFocusIndex++;
+                }
+            },
+            productKeyUp(){
+                if( this.productFocusIndex > -1 ){
+                    this.productFocusIndex--;
+                }
+            },
+            productKeyEnter(){
+                this.product =  this.itemsProduct[this.productFocusIndex].title;
+                this.productId = this.itemsProduct[this.productFocusIndex].id;
+                this.itemsProduct = [];
+                this.productFocusIndex = -1;
             }
 
         }
