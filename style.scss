@@ -18,17 +18,17 @@ input[type=submit] {
     cursor: pointer;
 }
 
-.autcomplete {
+.autcomplete-xyz {
     position: relative;
     width: 300px;
 }
 
-.autcomplete1 {
+.autcomplete1-xyz {
     position: relative;
     // width: 300px;
 }
 
-.autcomplete_items {
+.autcomplete_items-xyz {
     position: absolute;
     border: 1px solid #d4d4d4;
     border-bottom: none;
@@ -43,7 +43,7 @@ input[type=submit] {
     background: white;
 }
 
-.autcomplete_items1 {
+.autcomplete_items1-xyz {
     position: absolute;
     border: 1px solid #d4d4d4;
     border-bottom: none;
@@ -58,18 +58,18 @@ input[type=submit] {
     background: white;
 }
 
-.autcomplete_div {
+.autcomplete_div-xyz {
     border: 1px solid black;
 }
 
 
-.flex-container-autcomplete {
+.flex-container-autcomplete-xyz {
     display: flex;
     margin-top: 100px;
     flex: 1;
 }
 
-.input1 {
+.input1-xyz {
     position: relative;
     >div{
             position: absolute;
@@ -86,57 +86,58 @@ input[type=submit] {
 }
 
 
-
-.input2 {
+.input2-xyz {
     margin-left: 5px;
 }
 
-.button1 {
+.button1-xyz {
     cursor: pointer;
     // width: 150px;
     padding: 10px;
     font-size: 16px;
     border-radius: 6px;
     margin-left: 5px;
+    float:left;
 }
 
 
-.auto1{
+.auto1-xyz{
     float: left;
     margin-right: 3px;
+    margin-left: 30%;
     position: relative;
-   
+    // margin: 0 auto;
 }
 
-.auto2{
+.auto2-xyz{
     float: left;
     position: relative;
     
 }
 
-.clearFix{
+.clearFix-xyz{
     clear: both;
 }
 
-.autocomplete-items-div {
+.autocomplete-items-div-xyz {
     padding: 10px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
-
+    text-align: left;
     &:hover{
         background-color: #e9e9e9;
     }
 
 }
-.autocomplete-active {
+.autocomplete-active-xyz {
     background-color: DodgerBlue !important;
     color: #ffffff;
 }
 
 
 
- .autocomplete-full-div {
+ .autocomplete-full-div-xyz {
     position: absolute;
     border: 1px solid #d4d4d4;
     border-bottom: none;

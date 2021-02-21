@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./style.css">
     
@@ -58,32 +58,27 @@
 
     </div> -->
 
-
-    <div class="autcomplete-position" x-data="data()" x-init="$watch('category', value => categoryChange(value))"
-        x-init="$watch('product', value => productChange(value))"
-        
-        >
-        <div class="auto1" > 
-            <input type="text"  x-model="category" class="inputField" placeholder="Category" />
-            <div class="autocomplete-full-div" >
-                <template x-for="item in itemsCategory" :key="item">
-                    <div x-on:click="categoryClick(item)" class="autocomplete-items-div" x-text="item.name"></div>
+    <div class="autcomplete-position-xyz" x-data="data()">
+        <div class="auto1-xyz">
+            <input x-on:keydown.enter="categoryKeyEnter()" x-on:keydown.arrow-down="categoryKeyDown()" x-on:keydown.arrow-up="categoryKeyUp()" x-on:click="categoryFocusIndex = -1" type="text" x-on:input="categoryChange($event.target.value)"  x-model="category" class="inputField-xyz" placeholder="Category" />
+            <div class="autocomplete-full-div-xyz" >
+                <template x-for="(item , index) in itemsCategory" :key="item">
+                    <div :style="categoryFocus(index)" x-on:click="categoryClick(item)" class="autocomplete-items-div-xyz"
+                    x-text="item.name"></div>
                 </template>
             </div>
         </div>
-        <div class="auto2" > 
-            <input type="text"  x-model="product" class="inputField" placeholder="Product"/>
-            <div class="autocomplete-full-div">
+        <div class="auto2-xyz" > 
+            <input  type="text" x-on:input="productChange($event.target.value)" x-model="product" class="inputField-xyz" placeholder="Product"/>
+            <div class="autocomplete-full-div-xyz">
                 <template x-for="item in itemsProduct" :key="item">
-                    <div class="autocomplete-items-div" x-text="item.name"></div>
+                    <div x-on:click="productClick(item)" class="autocomplete-items-div-xyz" x-text="item.title"></div>
                 </template>
             </div>
         </div>
-    <button class="button1"> Submit </button>
-        <div class="clearFix"></div>
-
+    <button class="button1-xyz"> Submit </button>
+        <div class="clearFix-xyz"></div>
     </div>
-
 
 </body>
 
@@ -94,7 +89,11 @@
             itemsCategory:[],
             itemsProduct:[],
             category: "",
+            categoryId: "",
             product: "",
+            productId: "",
+            productFocusIndex: -1,
+            categoryFocusIndex: -1,
             
             itemsProductAll: [
             {
@@ -136,27 +135,77 @@
                 // this.value = value;
                 // this.items.push({ name: value });
                 // const regexp = new RegExp(`(${value})*`, 'gi') 
+                this.itemsProduct = [];
 
-                this.itemsCategory = this.itemsCategoryAll.filter(n=> value == n.name);
+                if(value == ''){
+                    this.categoryId = '';
+                    this.itemsCategory = [];
+                }else{
+                    // http://localhost/n/public/productSearch?productName=Soft&categoryId=7
+                    axios('http://localhost/n/public/categorySearch?q=' + value)
+                    .then(response => {
+                        console.log(response)
+                        this.itemsCategory = response.data;
+                    });
+                }
+                // this.itemsCategory = this.itemsCategoryAll.filter(n=> value == n.name);
 
                 console.log('this is new value' , value);
             },
-
             productChange(value){
                 // this.value = value;
                 // this.items.push({ name: value });
                 // let patt = /(${value})*/gi;
-                this.itemsProduct = this.itemsProductAll.filter(n=>{n.name == value});
+
+                this.itemsCategory = [];
+
+                // console.log(`http://localhost/n/public/productSearch?productName=${value}&categoryId=${this.categoryId}`);
+
+                axios(`http://localhost/n/public/productSearch?productName=${value}&categoryId=${this.categoryId}`)
+                    .then(response => {
+                        console.log(response)
+                        this.itemsProduct = response.data;
+                    });
+
+                // this.itemsProduct = this.itemsProductAll.filter(n=>{n.name == value});
 
                 console.log('this is new value' , value);
             },
             categoryClick(value){
+                this.categoryFocusIndex = -1;
                 console.log(value.name);
-                axios('https://jsonplaceholder.typicode.com/todos/1')
-                    .then(response => console.log(response));
-                    
-
-                    
+                this.category = value.name;
+                this.categoryId = value.id;
+                this.itemsCategory = [];
+            },
+            productClick(value){
+                console.log(value.name);
+                this.product = value.title;
+                this.productId = value.id;
+                this.itemsProduct = [];
+            },
+            categoryFocus(index){
+                if(index == this.categoryFocusIndex){
+                    return 'background-color: red';
+                }else{
+                    return 'background-color: white';
+                }
+            },
+            categoryKeyDown(){
+                if(this.itemsCategory.length > this.categoryFocusIndex ){
+                    this.categoryFocusIndex++;
+                }
+            },
+            categoryKeyUp(){
+                if( this.categoryFocusIndex > -1 ){
+                    this.categoryFocusIndex--;
+                }
+            },
+            categoryKeyEnter(){
+                this.category =  this.itemsCategory[this.categoryFocusIndex].name;
+                this.itemsCategory = [];
+                this.categoryId = this.itemsCategory[this.categoryFocusIndex].id;
+                this.categoryFocusIndex = -1;
             }
 
         }
